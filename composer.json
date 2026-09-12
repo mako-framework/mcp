@@ -23,7 +23,8 @@
     "require": {
         "php": ">=8.5.0",
         "mcp/sdk": "*",
-        "psr/container": "^2.0"
+        "psr/container": "^2.0",
+        "symfony/finder": "^7.4 || ^8.1"
     },
     "require-dev": {
         "mako/framework": "^13.0.0@dev",
