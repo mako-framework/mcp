@@ -1,5 +1,8 @@
 # MCP
 
+[![Tests](https://github.com/mako-framework/mcp/actions/workflows/tests.yml/badge.svg)](https://github.com/mako-framework/mcp/actions/workflows/tests.yml)
+[![Static analysis](https://github.com/mako-framework/mcp/actions/workflows/static-analysis.yml/badge.svg)](https://github.com/mako-framework/mcp/actions/workflows/static-analysis.yml)
+
 MCP ([Model Context Protocol](https://modelcontextprotocol.io)) package for the [Mako Framework](https://makoframework.com).
 
 The package is built on top of the official [MCP PHP SDK](https://github.com/modelcontextprotocol/php-sdk) and makes it easy to expose tools, resources and prompts from your Mako application.
