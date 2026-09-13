@@ -67,10 +67,10 @@ To use the MCP server with Visual Studio Code, add the following to your `.vscod
 
 ### HTTP
 
-Serving the MCP server over HTTP requires the [PSR HTTP message bridge](https://github.com/mako-framework/psr-http-message-bridge) package:
+Serving the MCP server over HTTP requires the [PSR HTTP message bridge](https://github.com/mako-framework/psr-http-message-bridge) package along with a [PSR-7](https://www.php-fig.org/psr/psr-7/) and [PSR-17](https://www.php-fig.org/psr/psr-17/) implementation such as [nyholm/psr7](https://github.com/Nyholm/psr7):
 
 ```
-composer require mako/psr-http-message-bridge
+composer require mako/psr-http-message-bridge nyholm/psr7
 ```
 
 You can then serve the MCP server from a controller. Note that the following example demonstrates basic usage without authentication or any other security measures, so make sure to secure the endpoint before exposing it publicly:
