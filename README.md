@@ -44,21 +44,78 @@ return
 
 ## Usage
 
+The MCP server can be run over `stdio` using the included reactor command or over HTTP using a controller.
+
 ### Visual Studio Code
 
 To use the MCP server with Visual Studio Code, add the following to your `.vscode/mcp.json` file:
 
 ```json
 {
-    "servers": {
-        "mako-app": {
-            "type": "stdio",
-            "command": "php",
-            "args": [
-                "${workspaceFolder}/app/reactor",
-                "mcp:server"
-            ]
-        }
-    }
+	"servers": {
+		"mako-app": {
+			"type": "stdio",
+			"command": "php",
+			"args": [
+				"${workspaceFolder}/app/reactor",
+				"mcp:server"
+			]
+		}
+	}
 }
+```
+
+### HTTP
+
+Serving the MCP server over HTTP requires the [PSR HTTP message bridge](https://github.com/mako-framework/psr-http-message-bridge) package:
+
+```
+composer require mako/psr-http-message-bridge
+```
+
+You can then serve the MCP server from a controller. Note that the following example demonstrates basic usage without authentication or any other security measures, so make sure to secure the endpoint before exposing it publicly:
+
+```php
+<?php
+
+namespace app\http\controllers;
+
+use mako\bridges\psr\http\message\MakoResponseHydrator;
+use mako\bridges\psr\http\message\PsrServerRequestFactory;
+use mako\http\Request;
+use mako\http\Response;
+use Mcp\Server;
+use Mcp\Server\Transport\StreamableHttpTransport;
+use Nyholm\Psr7\Factory\Psr17Factory;
+
+class Mcp
+{
+	public function __invoke(Request $request, Response $response, Server $server): void
+	{
+		$psr17Factory = new Psr17Factory;
+
+		$factory = new PsrServerRequestFactory(
+			serverRequestFactory: $psr17Factory,
+			uriFactory: $psr17Factory,
+			streamFactory: $psr17Factory,
+			uploadedFileFactory: $psr17Factory
+		);
+
+		$psrRequest = $factory->create($request);
+
+		$psrResponse = $server->run(new StreamableHttpTransport($psrRequest));
+
+		new MakoResponseHydrator()->hydrate($response, $psrResponse);
+	}
+}
+```
+
+Finally, register a route for it in your `app/http/routing/routes.php` file:
+
+```php
+<?php
+
+use app\http\controllers\Mcp;
+
+$routes->any('/mcp', Mcp::class);
 ```
