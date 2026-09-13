@@ -28,12 +28,17 @@ php app/reactor package:install mako/mcp
 Finally, add the package to the list of packages in your `app/config/application.php` file:
 
 ```php
-use mako\mcp\McpPackage;
+return
+[
+	// ...
 
-$packages = [
-    'cli' => [
-        McpPackage::class,
-    ],
+	'packages' => [
+		'cli' => [
+			mako\mcp\McpPackage::class,
+		],
+	],
+
+	// ...
 ];
 ```
 
