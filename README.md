@@ -42,6 +42,8 @@ return
 ];
 ```
 
+> Register the package under `cli` if you only want to serve the MCP server over `stdio`, under `web` if you only want to serve it over HTTP, or under `core` if you want to be able to serve it over both.
+
 ## Usage
 
 The MCP server can be run over `stdio` using the included reactor command or over HTTP using a controller.
@@ -119,5 +121,5 @@ Finally, register a route for it in your `app/http/routing/routes.php` file:
 
 use app\http\controllers\Mcp;
 
-$routes->any('/mcp', Mcp::class);
+$routes->all('/mcp', Mcp::class);
 ```
