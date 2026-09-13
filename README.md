@@ -48,6 +48,31 @@ return
 
 The MCP server can be run over `stdio` using the included reactor command or over HTTP using a controller.
 
+### Defining tools, resources and prompts
+
+Tools, resources and prompts are automatically discovered, so all you have to do is create your classes and decorate the methods with the appropriate attributes from the MCP PHP SDK:
+
+```php
+<?php
+
+namespace app\mcp\tools;
+
+use Mcp\Capability\Attribute\McpTool;
+
+use function rand;
+
+class WeatherTool
+{
+	#[McpTool(name: 'get_weather', description: 'Get the current weather for a city')]
+	public function getWeather(string $city): array
+	{
+		return ['city' => $city, 'temperature' => rand(-30, 30), 'unit' => 'celsius'];
+	}
+}
+```
+
+> The directories that are scanned during auto discovery can be configured in the published package configuration file.
+
 ### Visual Studio Code
 
 To use the MCP server with Visual Studio Code, add the following to your `.vscode/mcp.json` file:
