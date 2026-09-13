@@ -9,7 +9,7 @@ The package is built on top of the official [MCP PHP SDK](https://github.com/mod
 
 ## Requirements
 
-* Mako 13.0+
+* Mako ^13.0
 
 ## Installation
 
