@@ -8,9 +8,13 @@
 namespace mako\mcp\services;
 
 use mako\application\services\Service;
+use mako\application\web\Application as WebApplication;
+use mako\cache\CacheManager;
+use mako\cache\psr16\SimpleCache;
 use mako\config\Config;
 use mako\mcp\container\Container;
 use Mcp\Server;
+use Mcp\Server\Session\Psr16SessionStore;
 use Override;
 use Psr\Log\LoggerInterface;
 
@@ -19,17 +23,17 @@ use Psr\Log\LoggerInterface;
  */
 class McpService extends Service
 {
-    /**
-     * {@inheritDoc}
-     */
-    #[Override]
-    public function register(): void
-    {
-		$basePath = $this->app->getPath();
+	/**
+	 * {@inheritDoc}
+	 */
+	#[Override]
+	public function register(): void
+	{
+		$app = $this->app;
 
-        $this->container->registerSingleton(
+		$this->container->registerSingleton(
 			Server::class,
-			static function ($container) use ($basePath) {
+			static function ($container) use ($app) {
 				$config = $container->get(Config::class)->get('mako-mcp::config');
 
 				// Set up basic server settings
@@ -44,7 +48,7 @@ class McpService extends Service
 					$config['server_info']['title'] ?? null,
 				)
 				->setDiscovery(
-					$config['discovery']['base_path'] ?? $basePath,
+					$config['discovery']['base_path'] ?? $app->getPath(),
 					$config['discovery']['scan_dirs'],
 					$config['discovery']['exclude_dirs'],
 					null,
@@ -58,10 +62,23 @@ class McpService extends Service
 					$builder->setLogger($container->get(LoggerInterface::class));
 				}
 
+				// Set a session store if we are in a web context
+
+				if ($app instanceof WebApplication) {
+					$builder->setSession(new Psr16SessionStore(
+						new SimpleCache(
+							$container->get(CacheManager::class)
+							->getInstance($config['session']['cache_configuration'] ?? null)
+						),
+						prefix: $config['session']['prefix'] ?? 'mcp-',
+						ttl: $config['session']['ttl'] ?? 3600
+					));
+				}
+
 				// Build and return the server
 
 				return $builder->build();
 			}
 		);
-    }
+	}
 }
