@@ -7,13 +7,13 @@
 
 namespace mako\mcp\container\exceptions;
 
-use Psr\Container\ContainerExceptionInterface;
+use Psr\Container\NotFoundExceptionInterface;
 use RuntimeException;
 
 /**
  * Not found exception.
  */
-class NotFoundException extends RuntimeException implements ContainerExceptionInterface
+final class NotFoundException extends RuntimeException implements NotFoundExceptionInterface
 {
 
 }

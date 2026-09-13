@@ -22,7 +22,7 @@ use function str_contains;
 /**
  * Container.
  */
-class Container implements ContainerInterface
+final class Container implements ContainerInterface
 {
 	/**
 	 * Constructor.

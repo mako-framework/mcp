@@ -16,10 +16,10 @@ use Mcp\Server\Transport\StdioTransport;
  * MCP CLI Server.
  */
 #[CommandDescription('Starts the MCP server using the stdio transport.')]
-class Server extends Command
+final class Server extends Command
 {
 	/**
-	 * Run the MCP server.
+	 * Runs the MCP server.
 	 */
 	public function execute(McpServer $server): void
 	{

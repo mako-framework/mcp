@@ -8,6 +8,7 @@
 namespace mako\mcp\services;
 
 use mako\application\services\Service;
+use mako\config\Config;
 use mako\mcp\container\Container;
 use Mcp\Server;
 use Override;
@@ -26,11 +27,11 @@ class McpService extends Service
     {
 		$basePath = $this->app->getPath();
 
-		$config = $this->app->getConfig()->get('mako-mcp::config');
-
         $this->container->registerSingleton(
 			Server::class,
-			static function ($container) use ($basePath, $config) {
+			static function ($container) use ($basePath) {
+				$config = $container->get(Config::class)->get('mako-mcp::config');
+
 				// Set up basic server settings
 
 				$builder = Server::builder()

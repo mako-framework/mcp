@@ -13,7 +13,7 @@ use RuntimeException;
 /**
  * Container exception.
  */
-class ContainerException extends RuntimeException implements ContainerExceptionInterface
+final class ContainerException extends RuntimeException implements ContainerExceptionInterface
 {
 
 }

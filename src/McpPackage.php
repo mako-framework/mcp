@@ -21,7 +21,7 @@ class McpPackage extends Package
 	 * {@inheritDoc}
 	 */
 	#[Override]
-	protected string $packageName = 'mako/mcp';
+	final protected string $packageName = 'mako/mcp';
 
 	/**
 	 * {@inheritDoc}
@@ -37,7 +37,7 @@ class McpPackage extends Package
 	 * {@inheritDoc}
 	 */
 	#[Override]
-	protected array $commands = [
+	final protected array $commands = [
 		'mcp:server' => Server::class,
 	];
 }
