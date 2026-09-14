@@ -18,11 +18,25 @@ use Mcp\Server\Session\Psr16SessionStore;
 use Override;
 use Psr\Log\LoggerInterface;
 
+use function array_key_exists;
+
 /**
  * MCP service.
  */
 class McpService extends Service
 {
+	/**
+	 * Resolves context specific directories.
+	 */
+	protected static function resolveContextualDirs(array $dirs, string $contextKey): array
+	{
+		if (array_key_exists('web', $dirs) || array_key_exists('cli', $dirs)) {
+			return $dirs[$contextKey] ?? [];
+		}
+
+		return $dirs;
+	}
+
 	/**
 	 * {@inheritDoc}
 	 */
@@ -35,6 +49,16 @@ class McpService extends Service
 			Server::class,
 			static function ($container) use ($app) {
 				$config = $container->get(Config::class)->get('mako-mcp::config');
+
+				$isWebApplication = $app instanceof WebApplication;
+
+				// Resolve scan and exclude directories, allowing context specific configuration
+
+				$contextKey = $isWebApplication ? 'web' : 'cli';
+
+				$scanDirs = static::resolveContextualDirs($config['discovery']['scan_dirs'], $contextKey);
+
+				$excludeDirs = static::resolveContextualDirs($config['discovery']['exclude_dirs'], $contextKey);
 
 				// Set up basic server settings
 
@@ -49,8 +73,8 @@ class McpService extends Service
 				)
 				->setDiscovery(
 					$config['discovery']['base_path'] ?? $app->getPath(),
-					$config['discovery']['scan_dirs'],
-					$config['discovery']['exclude_dirs'],
+					$scanDirs,
+					$excludeDirs,
 					null,
 					$config['discovery']['name_patterns']
 				)
@@ -64,7 +88,7 @@ class McpService extends Service
 
 				// Set a session store if we are in a web context
 
-				if ($app instanceof WebApplication) {
+				if ($isWebApplication) {
 					$builder->setSession(new Psr16SessionStore(
 						new SimpleCache(
 							$container->get(CacheManager::class)
