@@ -26,7 +26,7 @@ return [
 	 * ---------------------------------------------------------
 	 *
 	 * The 'scan_dirs' and 'exclude_dirs' options can also be arrays with 'web' and/or 'cli'
-	 * keys to use different directories per context (e.g. ['web' => ['mcp/http'], 'cli' => ['mcp/console']]).
+	 * keys to use different directories per context (e.g. ['web' => ['mcp/http'], 'cli' => ['mcp/stdio']]).
 	 * Note that when using context specific keys, a missing key results in an empty set for that context.
 	 *
 	 * base_path    : Base directory for discovery. Defaults to the application path when set to null
