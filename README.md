@@ -42,7 +42,7 @@ return
 ];
 ```
 
-> Register the package under `cli` if you only want to serve the MCP server over `stdio`, under `web` if you only want to serve it over HTTP, or under `core` if you want to be able to serve it over both.
+> Register the package under `cli` if you only want to serve MCP servers over `stdio`, under `web` if you only want to serve them over HTTP, or under `core` if you want to be able to serve them over both.
 
 ## Usage
 
@@ -178,6 +178,8 @@ class Mcp
 	}
 }
 ```
+
+> The example above serves the default server. To serve a named server, use the `InjectServer` attribute or the `ServerFactory` as shown in the multiple servers section.
 
 Finally, register a route for it in your `app/http/routing/routes.php` file:
 
