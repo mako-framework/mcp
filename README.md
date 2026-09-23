@@ -48,6 +48,11 @@ return
 
 The MCP server can be run over `stdio` using the included reactor command or over HTTP using a controller.
 
+```
+php app/reactor mcp:server         # Runs the default server
+php app/reactor mcp:server admin   # Runs the "admin" server
+```
+
 ### Defining tools, resources and prompts
 
 Tools, resources and prompts are automatically discovered, so all you have to do is create your classes and decorate the methods with the appropriate attributes from the MCP PHP SDK:
@@ -73,6 +78,39 @@ class WeatherTool
 
 > The directories that are scanned during auto discovery can be configured in the published package configuration file.
 
+### Multiple servers
+
+The package supports running multiple MCP servers, each with its own set of tools, resources and prompts. Servers are defined in the published package configuration file:
+
+```php
+'servers' => [
+	'main' => [
+		// ...
+	],
+	'admin' => [
+		// ...
+	],
+],
+```
+
+Type hinting the `Server` class will inject the default server. If you want to inject a named server then you can use the `InjectServer` attribute:
+
+```php
+use mako\mcp\attributes\syringe\InjectServer;
+use Mcp\Server;
+
+public function __construct(
+	#[InjectServer('admin')] protected Server $server
+) {
+}
+```
+
+You can also create server instances programmatically using the `ServerFactory`:
+
+```php
+$server = $serverFactory->create('admin');
+```
+
 ### Visual Studio Code
 
 To use the MCP server with Visual Studio Code, add the following to your `.vscode/mcp.json` file:
@@ -91,6 +129,8 @@ To use the MCP server with Visual Studio Code, add the following to your `.vscod
 	}
 }
 ```
+
+> To run a named server instead of the default one, add the server name to the `args` array (e.g. `"mcp:server", "admin"`).
 
 ### HTTP
 
