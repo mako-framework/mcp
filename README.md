@@ -142,7 +142,7 @@ composer require mako/psr-http-message-bridge nyholm/psr7
 
 Sessions are stored using the cache when serving an MCP server over HTTP, so make sure that the `CacheService` is enabled in the services section of your `app/config/application.php` file.
 
-You can then serve an MCP server from a controller. Note that the following example demonstrates basic usage without authentication or any other security measures, so make sure to secure the endpoint before exposing it publicly:
+You can then serve an MCP server from a controller. Note that the following example demonstrates basic usage without authentication or any other security measures, so make sure to secure the endpoint if it exposes sensitive information or non-read-only tools:
 
 ```php
 <?php
