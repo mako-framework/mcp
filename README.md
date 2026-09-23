@@ -46,7 +46,7 @@ return
 
 ## Usage
 
-The MCP server can be run over `stdio` using the included reactor command or over HTTP using a controller.
+An MCP server can be run over `stdio` using the included reactor command or over HTTP using a controller.
 
 ```
 php app/reactor mcp:server         # Runs the default server
@@ -113,7 +113,7 @@ $server = $serverFactory->create('admin');
 
 ### Visual Studio Code
 
-To use the MCP server with Visual Studio Code, add the following to your `.vscode/mcp.json` file:
+To use an MCP server with Visual Studio Code, add the following to your `.vscode/mcp.json` file:
 
 ```json
 {
@@ -134,15 +134,15 @@ To use the MCP server with Visual Studio Code, add the following to your `.vscod
 
 ### HTTP
 
-Serving the MCP server over HTTP requires the [PSR HTTP message bridge](https://github.com/mako-framework/psr-http-message-bridge) package along with a [PSR-7](https://www.php-fig.org/psr/psr-7/) and [PSR-17](https://www.php-fig.org/psr/psr-17/) implementation such as [nyholm/psr7](https://github.com/Nyholm/psr7):
+Serving an MCP server over HTTP requires the [PSR HTTP message bridge](https://github.com/mako-framework/psr-http-message-bridge) package along with a [PSR-7](https://www.php-fig.org/psr/psr-7/) and [PSR-17](https://www.php-fig.org/psr/psr-17/) implementation such as [nyholm/psr7](https://github.com/Nyholm/psr7):
 
 ```
 composer require mako/psr-http-message-bridge nyholm/psr7
 ```
 
-Sessions are stored using the cache when serving the MCP server over HTTP, so make sure that the `CacheService` is enabled in the services section of your `app/config/application.php` file.
+Sessions are stored using the cache when serving an MCP server over HTTP, so make sure that the `CacheService` is enabled in the services section of your `app/config/application.php` file.
 
-You can then serve the MCP server from a controller. Note that the following example demonstrates basic usage without authentication or any other security measures, so make sure to secure the endpoint before exposing it publicly:
+You can then serve an MCP server from a controller. Note that the following example demonstrates basic usage without authentication or any other security measures, so make sure to secure the endpoint before exposing it publicly:
 
 ```php
 <?php
