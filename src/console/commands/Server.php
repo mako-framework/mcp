@@ -7,22 +7,28 @@
 
 namespace mako\mcp\console\commands;
 
+use mako\cli\input\arguments\Argument;
+use mako\cli\input\arguments\PositionalArgument;
+use mako\mcp\ServerFactory;
+use mako\reactor\attributes\CommandArguments;
 use mako\reactor\attributes\CommandDescription;
 use mako\reactor\Command;
-use Mcp\Server as McpServer;
 use Mcp\Server\Transport\StdioTransport;
 
 /**
  * MCP CLI Server.
  */
-#[CommandDescription('Starts the MCP server using the stdio transport.')]
+#[CommandDescription('Starts an MCP server using the stdio transport.')]
+#[CommandArguments(
+	new PositionalArgument('server', 'Name of the MCP server to run', Argument::IS_OPTIONAL)
+)]
 final class Server extends Command
 {
 	/**
-	 * Runs the MCP server.
+	 * Starts an MCP server.
 	 */
-	public function execute(McpServer $server): void
+	public function execute(ServerFactory $serverFactory, ?string $server = null): void
 	{
-		$server->run(new StdioTransport);
+		$serverFactory->create($server)->run(new StdioTransport);
 	}
 }
