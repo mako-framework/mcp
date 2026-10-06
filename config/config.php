@@ -53,7 +53,7 @@ return [
 			],
 			'session' => [
 				'cache_configuration' => null,
-				'prefix'              => 'mcp-',
+				'prefix'              => 'mcp-main-',
 				'ttl'                 => 3600,
 			],
 		],

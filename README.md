@@ -22,7 +22,7 @@ composer require mako/mcp
 Next, publish the package configuration to your application using the following reactor command:
 
 ```
-php app/reactor package:install mako/mcp
+php app/reactor package:publish mako/mcp
 ```
 
 Finally, add the package to the list of packages in your `app/config/application.php` file:
