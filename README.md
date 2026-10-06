@@ -46,13 +46,6 @@ return
 
 ## Usage
 
-An MCP server can be run over `stdio` using the included reactor command or over HTTP using a controller.
-
-```
-php app/reactor mcp:server         # Runs the default server
-php app/reactor mcp:server admin   # Runs the "admin" server
-```
-
 ### Multiple servers
 
 The package supports running multiple MCP servers, each with its own set of tools, resources and prompts. Servers are defined in the published package configuration file:
@@ -91,26 +84,14 @@ class WeatherTool
 }
 ```
 
-### Visual Studio Code
+### Stdio
 
-To use an MCP server with Visual Studio Code, add the following to your `.vscode/mcp.json` file:
+An MCP server can be run over `stdio` using the included reactor command or over HTTP using a controller.
 
-```json
-{
-	"servers": {
-		"mako-app": {
-			"type": "stdio",
-			"command": "php",
-			"args": [
-				"${workspaceFolder}/app/reactor",
-				"mcp:server"
-			]
-		}
-	}
-}
 ```
-
-> To run a named server instead of the default one, add the server name to the `args` array (e.g. `"mcp:server", "admin"`).
+php app/reactor mcp:server         # Runs the default server
+php app/reactor mcp:server admin   # Runs the "admin" server
+```
 
 ### HTTP
 
@@ -189,3 +170,24 @@ use app\http\controllers\Mcp;
 
 $routes->all('/mcp', Mcp::class);
 ```
+
+### Visual Studio Code
+
+To use an MCP server with Visual Studio Code, add the following to your `.vscode/mcp.json` file:
+
+```json
+{
+	"servers": {
+		"mako-app": {
+			"type": "stdio",
+			"command": "php",
+			"args": [
+				"${workspaceFolder}/app/reactor",
+				"mcp:server"
+			]
+		}
+	}
+}
+```
+
+> To run a named server instead of the default one, add the server name to the `args` array (e.g. `"mcp:server", "admin"`).
