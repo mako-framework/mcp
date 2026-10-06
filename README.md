@@ -53,9 +53,24 @@ php app/reactor mcp:server         # Runs the default server
 php app/reactor mcp:server admin   # Runs the "admin" server
 ```
 
+### Multiple servers
+
+The package supports running multiple MCP servers, each with its own set of tools, resources and prompts. Servers are defined in the published package configuration file:
+
+```php
+'servers' => [
+	'main' => [
+		// ...
+	],
+	'admin' => [
+		// ...
+	],
+],
+```
+
 ### Defining tools, resources and prompts
 
-Tools, resources and prompts are automatically discovered, so all you have to do is create your classes and decorate the methods with the appropriate attributes from the MCP PHP SDK:
+Tools, resources and prompts are automatically discovered from the directories configured for each server in the published package configuration file, so all you have to do is create your classes and decorate the methods with the appropriate attributes from the MCP PHP SDK:
 
 ```php
 <?php
@@ -74,41 +89,6 @@ class WeatherTool
 		return ['city' => $city, 'temperature' => rand(-30, 30), 'unit' => 'celsius'];
 	}
 }
-```
-
-> The directories that are scanned during auto discovery can be configured in the published package configuration file.
-
-### Multiple servers
-
-The package supports running multiple MCP servers, each with its own set of tools, resources and prompts. Servers are defined in the published package configuration file:
-
-```php
-'servers' => [
-	'main' => [
-		// ...
-	],
-	'admin' => [
-		// ...
-	],
-],
-```
-
-Type hinting the `Server` class will inject the default server. If you want to inject a named server then you can use the `InjectServer` attribute:
-
-```php
-use mako\mcp\attributes\syringe\InjectServer;
-use Mcp\Server;
-
-public function __construct(
-	#[InjectServer('admin')] protected Server $server
-) {
-}
-```
-
-You can also create server instances programmatically using the `ServerFactory`:
-
-```php
-$server = $serverFactory->create('admin');
 ```
 
 ### Visual Studio Code
@@ -141,6 +121,27 @@ composer require mako/psr-http-message-bridge nyholm/psr7
 ```
 
 Sessions are stored using the cache when serving an MCP server over HTTP, so make sure that the `CacheService` is enabled in the services section of your `app/config/application.php` file.
+
+Type hinting the `Server` class will inject the default server. If you want to inject a named server then you can use the `InjectServer` attribute:
+
+```php
+use mako\mcp\attributes\syringe\InjectServer;
+use Mcp\Server;
+
+class AdminServer
+{
+	public function __construct(
+		#[InjectServer('admin')] protected Server $server
+	) {
+	}
+}
+```
+
+You can also create server instances programmatically using the `ServerFactory` class:
+
+```php
+$server = $serverFactory->create('admin');
+```
 
 You can then serve an MCP server from a controller. Note that the following example demonstrates basic usage without authentication or any other security measures, so make sure to secure the endpoint if it exposes sensitive information or non-read-only tools:
 
@@ -178,8 +179,6 @@ class Mcp
 	}
 }
 ```
-
-> The example above serves the default server. To serve a named server, use the `InjectServer` attribute or the `ServerFactory` as shown in the multiple servers section.
 
 Finally, register a route for it in your `app/http/routing/routes.php` file:
 
