@@ -86,7 +86,7 @@ class WeatherTool
 
 ### Stdio
 
-An MCP server can be run over `stdio` using the included reactor command or over HTTP using a controller.
+An MCP server can be run over `stdio` using the included reactor command.
 
 ```
 php app/reactor mcp:server         # Runs the default server
