@@ -11,7 +11,7 @@ use mako\mcp\attributes\syringe\InjectServer;
 use mako\mcp\ServerFactory;
 use mako\syringe\Container;
 use mako\tests\TestCase;
-use Mcp\Server;
+use Mcp\Server\Server;
 use Mockery;
 use PHPUnit\Framework\Attributes\Group;
 use ReflectionParameter;

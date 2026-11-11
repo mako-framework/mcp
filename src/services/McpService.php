@@ -10,7 +10,7 @@ namespace mako\mcp\services;
 use mako\application\services\Service;
 use mako\config\Config;
 use mako\mcp\ServerFactory;
-use Mcp\Server;
+use Mcp\Server\Server;
 use Override;
 
 /**

@@ -12,7 +12,7 @@ use mako\cache\CacheManager;
 use mako\cache\psr16\SimpleCache;
 use mako\mcp\container\Container;
 use mako\mcp\exceptions\McpException;
-use Mcp\Server;
+use Mcp\Server\Server;
 use Mcp\Server\Session\Psr16SessionStore;
 use Psr\Log\LoggerInterface;
 

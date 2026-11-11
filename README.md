@@ -70,7 +70,7 @@ Tools, resources and prompts are automatically discovered from the directories c
 
 namespace app\mcp\tools;
 
-use Mcp\Capability\Attribute\McpTool;
+use Mcp\Server\Capability\Attribute\McpTool;
 
 use function rand;
 
@@ -107,7 +107,7 @@ Type hinting the `Server` class will inject the default server. If you want to i
 
 ```php
 use mako\mcp\attributes\syringe\InjectServer;
-use Mcp\Server;
+use Mcp\Server\Server;
 
 class AdminServer
 {
@@ -135,7 +135,7 @@ use mako\bridges\psr\http\message\MakoResponseHydrator;
 use mako\bridges\psr\http\message\PsrServerRequestFactory;
 use mako\http\Request;
 use mako\http\Response;
-use Mcp\Server;
+use Mcp\Server\Server;
 use Mcp\Server\Transport\StreamableHttpTransport;
 use Nyholm\Psr7\Factory\Psr17Factory;
 

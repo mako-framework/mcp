@@ -11,7 +11,7 @@ use Attribute;
 use mako\mcp\ServerFactory;
 use mako\syringe\attributes\InjectorInterface;
 use mako\syringe\Container;
-use Mcp\Server;
+use Mcp\Server\Server;
 use Override;
 use ReflectionParameter;
 
