@@ -1,6 +1,6 @@
 <?php
 
-use Mcp\Capability\Discovery\DiscovererInterface;
+use Mcp\Server\Capability\Discovery\DiscovererInterface;
 
 return [
 	/*
